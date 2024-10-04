@@ -103,7 +103,37 @@ int main()
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+	// List가 2개가 주어졌을 때, 홀수 = ll1 짝수 = ll2에 대입하라.
+	// 단, ll2가 들어갈 수 없는 상황은 제외한다. -> ll2 노드 뒤에 ll2 노드
+
+	// 두 List의 Size를 비교한다.
+	// 3 = { 1, 2, 3}
+	// 3 = { 4, 5, 6}
+	// 6 = { 1, 4, 2, 5, 3, 6}
+
+	int l1_size = ll1->size;
+	int l2_size = ll2->size;
+
+	// 둘 중 하나라도 Size가 존재하지 않으면, 굳이?
+	if(l1_size <= 0 || l2_size <= 0)
+		return;
+	
+	ListNode* temp;
+	int index = 1;
+	// MaxIndex는 ll1의 Size만큼만.
+	int max_index = (ll1->size < ll2->size) ? 
+												ll1->size:
+												ll2->size;
+	printf("%d", max_index);
+	while(max_index > 0)
+	{
+		temp = findNode(ll2, 0);
+		insertNode(ll1, index, temp->item);
+		removeNode(ll2, 0);
+
+		index += 2;
+		max_index--;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
