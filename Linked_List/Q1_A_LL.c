@@ -58,6 +58,7 @@ int main()
 
 		switch (c)
 		{
+		// 오름차 순으로 LL에 데이터 삽입
 		case 1:
 			printf("Input an integer that you want to add to the linked list: ");
 			scanf("%d", &i);
@@ -68,11 +69,14 @@ int main()
 		case 2:
 			printf("The value %d was added at index %d\n", i, j);
 			break;
+
+		// 결과 표기 후 삭제
 		case 3:
 			printf("The resulting sorted linked list is: ");
 			printList(&ll);
 			removeAllItems(&ll);
 			break;
+		// 모든 아이템 삭제
 		case 0:
 			removeAllItems(&ll);
 			break;
@@ -90,7 +94,43 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	/* add your code here */
+	// 1. 입력 받은 정수를 오름차순으로 삽입하는 함수 insertSortedLL()을 작성한다.
+	// 2. 삽입에 성공했다면 삽입된 Index의 위치를 반환해야 한다.
+	// 3. 정수가 이미 위치에 존재한다면 정수를 삽입할 수 없고 -1을 반환한다.
+
+	if(ll == NULL)
+		return -1;
+	
+	if(ll->head == NULL)
+	{
+		insertNode(ll, 0, item);
+		return ll->size - 1;
+	}
+
+	ListNode* temp = ll->head;
+	int index = 0;
+	while(temp != NULL)
+	{
+		if(temp->item < item)
+		{
+			if(temp->next == NULL || temp->next->item > item)
+			{
+				insertNode(ll, ++index, item);
+				return index;
+			}
+		}
+		else if(temp->item == item)
+			return -1;
+		else if(temp->item > item)
+		{
+			insertNode(ll, index, item);
+			return index;
+		}
+
+		temp = temp->next;
+		index++;
+	}
+	return -1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
